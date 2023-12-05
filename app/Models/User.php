@@ -42,4 +42,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    /**
+     * user relationship to all expenseGroupUsers.
+     */
+    public function expenseGroupUsers()
+    {
+        return $this->hasMany(ExpenseGroupUser::class, 'user_id');
+    }
 }
