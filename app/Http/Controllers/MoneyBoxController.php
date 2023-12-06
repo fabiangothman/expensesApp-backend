@@ -15,7 +15,7 @@ class MoneyBoxController extends Controller
     public function index(): JsonResponse
     {
         $moneyBoxes = MoneyBox::all();
-        return response()->json(['MoneyBoxes' => $moneyBoxes], Response::HTTP_OK);
+        return response()->json(['moneyBoxes' => $moneyBoxes], Response::HTTP_OK);
     }
 
     /**
@@ -23,8 +23,12 @@ class MoneyBoxController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        MoneyBox::create($request->all());
-        return response()->json(['message' => 'MoneyBox created successfully'], Response::HTTP_CREATED);
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'currency_code' => 'required|string|size:3',
+        ]);
+        $moneyBox = MoneyBox::create($validatedData);
+        return response()->json(['moneyBox' => $moneyBox], Response::HTTP_CREATED);
     }
 
     /**
@@ -33,7 +37,7 @@ class MoneyBoxController extends Controller
     public function show($id): JsonResponse
     {
         $moneyBox = MoneyBox::findOrFail($id);
-        return response()->json(['MoneyBox' => $moneyBox], Response::HTTP_OK);
+        return response()->json(['moneyBox' => $moneyBox], Response::HTTP_OK);
     }
 
     /**
@@ -42,9 +46,13 @@ class MoneyBoxController extends Controller
     public function update(Request $request, $id): JsonResponse
     {
         $moneyBox = MoneyBox::findOrFail($id);
-        $moneyBox->update($request->all());
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'currency_code' => 'required|string|size:3',
+        ]);
+        $moneyBox->update($validatedData);
 
-        return response()->json(['message' => 'MoneyBox updated successfully'], Response::HTTP_OK);
+        return response()->json(['moneyBox' => $moneyBox], Response::HTTP_OK);
     }
 
     /**
@@ -55,6 +63,6 @@ class MoneyBoxController extends Controller
         $moneyBox = MoneyBox::findOrFail($id);
         $moneyBox->delete();
 
-        return response()->json(['message' => 'MoneyBox deleted successfully'], Response::HTTP_OK);
+        return response()->json(['moneyBox' => $moneyBox], Response::HTTP_OK);
     }
 }

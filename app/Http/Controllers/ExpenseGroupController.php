@@ -15,7 +15,7 @@ class ExpenseGroupController extends Controller
     public function index(): JsonResponse
     {
         $expenseGroups = ExpenseGroup::all();
-        return response()->json(['ExpenseGroups' => $expenseGroups], Response::HTTP_OK);
+        return response()->json(['expenseGroups' => $expenseGroups], Response::HTTP_OK);
     }
 
     /**
@@ -23,8 +23,13 @@ class ExpenseGroupController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        ExpenseGroup::create($request->all());
-        return response()->json(['message' => 'ExpenseGroup created successfully'], Response::HTTP_CREATED);
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:100',
+            'group_key' => 'required|string|size:40|unique:expense_groups,group_key',
+            'moneybox_id' => 'required|exists:money_boxes,id',
+        ]);
+        $expenseGroup = ExpenseGroup::create($validatedData);
+        return response()->json(['expenseGroup' => $expenseGroup], Response::HTTP_CREATED);
     }
 
     /**
@@ -33,7 +38,7 @@ class ExpenseGroupController extends Controller
     public function show($id): JsonResponse
     {
         $expenseGroup = ExpenseGroup::findOrFail($id);
-        return response()->json(['ExpenseGroup' => $expenseGroup], Response::HTTP_OK);
+        return response()->json(['expenseGroup' => $expenseGroup], Response::HTTP_OK);
     }
 
     /**
@@ -42,9 +47,14 @@ class ExpenseGroupController extends Controller
     public function update(Request $request, $id): JsonResponse
     {
         $expenseGroup = ExpenseGroup::findOrFail($id);
-        $expenseGroup->update($request->all());
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:100',
+            'group_key' => 'required|string|size:40|unique:expense_groups,group_key',
+            'moneybox_id' => 'required|exists:money_boxes,id',
+        ]);
+        $expenseGroup->update($validatedData);
 
-        return response()->json(['message' => 'ExpenseGroup updated successfully'], Response::HTTP_OK);
+        return response()->json(['expenseGroup' => $expenseGroup], Response::HTTP_OK);
     }
 
     /**
@@ -55,6 +65,6 @@ class ExpenseGroupController extends Controller
         $expenseGroup = ExpenseGroup::findOrFail($id);
         $expenseGroup->delete();
 
-        return response()->json(['message' => 'ExpenseGroup deleted successfully'], Response::HTTP_OK);
+        return response()->json(['expenseGroup' => $expenseGroup], Response::HTTP_OK);
     }
 }

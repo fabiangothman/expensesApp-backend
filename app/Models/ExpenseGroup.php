@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ExpenseGroup extends Model
 {
     use HasFactory;
-
-    protected $timestamps = true;
+    
     protected $fillable = [
         'name',
         'group_key',

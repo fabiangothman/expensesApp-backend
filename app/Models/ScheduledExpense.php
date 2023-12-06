@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ScheduledExpense extends Model
 {
     use HasFactory;
-
-    protected $timestamps = true;
+    
     protected $fillable = [
         'name',
         'transaction_type',

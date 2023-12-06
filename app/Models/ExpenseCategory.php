@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ExpenseCategory extends Model
 {
     use HasFactory;
-
-    protected $timestamps = true;
+    
     protected $fillable = [
         'name',
         'expensegroup_id',

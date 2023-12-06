@@ -15,7 +15,7 @@ class ExpenseCategoryController extends Controller
     public function index(): JsonResponse
     {
         $expenseCategories = ExpenseCategory::all();
-        return response()->json(['ExpenseCategory' => $expenseCategories], Response::HTTP_OK);
+        return response()->json(['expenseCategories' => $expenseCategories], Response::HTTP_OK);
     }
 
     /**
@@ -23,8 +23,14 @@ class ExpenseCategoryController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        ExpenseCategory::create($request->all());
-        return response()->json(['message' => 'ExpenseCategory created successfully'], Response::HTTP_CREATED);
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:100',
+            'expensegroup_id' => 'required|exists:expense_groups,id',
+            'description' => 'nullable|string|max:255',
+            'parentcategory_id' => 'nullable|exists:expense_categories,id',
+        ]);
+        $expenseCategory = ExpenseCategory::create($validatedData);
+        return response()->json(['expenseCategory' => $expenseCategory], Response::HTTP_CREATED);
     }
 
     /**
@@ -33,7 +39,7 @@ class ExpenseCategoryController extends Controller
     public function show($id): JsonResponse
     {
         $expenseCategory = ExpenseCategory::findOrFail($id);
-        return response()->json(['ExpenseCategory' => $expenseCategory], Response::HTTP_OK);
+        return response()->json(['expenseCategory' => $expenseCategory], Response::HTTP_OK);
     }
 
     /**
@@ -42,9 +48,15 @@ class ExpenseCategoryController extends Controller
     public function update(Request $request, $id): JsonResponse
     {
         $expenseCategory = ExpenseCategory::findOrFail($id);
-        $expenseCategory->update($request->all());
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:100',
+            'expensegroup_id' => 'required|exists:expense_groups,id',
+            'description' => 'nullable|string|max:255',
+            'parentcategory_id' => 'nullable|exists:expense_categories,id',
+        ]);
+        $expenseCategory->update($validatedData);
 
-        return response()->json(['message' => 'ExpenseCategory updated successfully'], Response::HTTP_OK);
+        return response()->json(['expenseCategory' => $expenseCategory], Response::HTTP_OK);
     }
 
     /**
@@ -55,6 +67,6 @@ class ExpenseCategoryController extends Controller
         $expenseCategory = ExpenseCategory::findOrFail($id);
         $expenseCategory->delete();
 
-        return response()->json(['message' => 'ExpenseCategory deleted successfully'], Response::HTTP_OK);
+        return response()->json(['expenseCategory' => $expenseCategory], Response::HTTP_OK);
     }
 }
