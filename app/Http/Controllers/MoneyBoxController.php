@@ -14,8 +14,12 @@ class MoneyBoxController extends Controller
      */
     public function index(): JsonResponse
     {
-        $moneyBoxes = MoneyBox::all();
-        return response()->json(['moneyBoxes' => $moneyBoxes], Response::HTTP_OK);
+        $entriesArray = MoneyBox::all();
+        return response()->json([
+            'success' => true,
+            'data' => $entriesArray,
+            'error' => null,
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -27,8 +31,12 @@ class MoneyBoxController extends Controller
             'name' => 'required|string|max:255',
             'currency_code' => 'required|string|size:3',
         ]);
-        $moneyBox = MoneyBox::create($validatedData);
-        return response()->json(['moneyBox' => $moneyBox], Response::HTTP_CREATED);
+        $entryObject = MoneyBox::create($validatedData);
+        return response()->json([
+            'success' => true,
+            'data' => $entryObject,
+            'error' => null,
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -36,8 +44,20 @@ class MoneyBoxController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $moneyBox = MoneyBox::findOrFail($id);
-        return response()->json(['moneyBox' => $moneyBox], Response::HTTP_OK);
+        $entryObject = MoneyBox::find($id);
+        if (!$entryObject) {
+            return response()->json([
+                'success' => false,
+                'data' => null,
+                'error' => "Entry with $id was not found in ".class_basename(get_class($this)).".",
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => $entryObject,
+            'error' => null,
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -45,14 +65,25 @@ class MoneyBoxController extends Controller
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $moneyBox = MoneyBox::findOrFail($id);
+        $entryObject = MoneyBox::find($id);
+        if (!$entryObject) {
+            return response()->json([
+                'success' => false,
+                'data' => null,
+                'error' => "Entry with $id was not found in ".class_basename(get_class($this)).".",
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'currency_code' => 'required|string|size:3',
         ]);
-        $moneyBox->update($validatedData);
-
-        return response()->json(['moneyBox' => $moneyBox], Response::HTTP_OK);
+        $entryObject->update($validatedData);
+        return response()->json([
+            'success' => true,
+            'data' => $entryObject,
+            'error' => null,
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -60,9 +91,20 @@ class MoneyBoxController extends Controller
      */
     public function destroy($id): JsonResponse
     {
-        $moneyBox = MoneyBox::findOrFail($id);
-        $moneyBox->delete();
-
-        return response()->json(['moneyBox' => $moneyBox], Response::HTTP_OK);
+        $entryObject = MoneyBox::find($id);
+        if (!$entryObject) {
+            return response()->json([
+                'success' => false,
+                'data' => null,
+                'error' => "Entry with $id was not found in ".class_basename(get_class($this)).".",
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
+        $entryObject->delete();
+        return response()->json([
+            'success' => true,
+            'data' => $entryObject,
+            'error' => null,
+        ], Response::HTTP_OK);
     }
 }

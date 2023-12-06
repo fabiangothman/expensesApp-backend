@@ -14,8 +14,12 @@ class ExpenseGroupController extends Controller
      */
     public function index(): JsonResponse
     {
-        $expenseGroups = ExpenseGroup::all();
-        return response()->json(['expenseGroups' => $expenseGroups], Response::HTTP_OK);
+        $entriesArray = ExpenseGroup::all();
+        return response()->json([
+            'success' => true,
+            'data' => $entriesArray,
+            'error' => null,
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -28,8 +32,12 @@ class ExpenseGroupController extends Controller
             'group_key' => 'required|string|size:40|unique:expense_groups,group_key',
             'moneybox_id' => 'required|exists:money_boxes,id',
         ]);
-        $expenseGroup = ExpenseGroup::create($validatedData);
-        return response()->json(['expenseGroup' => $expenseGroup], Response::HTTP_CREATED);
+        $entryObject = ExpenseGroup::create($validatedData);
+        return response()->json([
+            'success' => true,
+            'data' => $entryObject,
+            'error' => null,
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -37,8 +45,20 @@ class ExpenseGroupController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $expenseGroup = ExpenseGroup::findOrFail($id);
-        return response()->json(['expenseGroup' => $expenseGroup], Response::HTTP_OK);
+        $entryObject = ExpenseGroup::find($id);
+        if (!$entryObject) {
+            return response()->json([
+                'success' => false,
+                'data' => null,
+                'error' => "Entry with $id was not found in ".class_basename(get_class($this)).".",
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => $entryObject,
+            'error' => null,
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -46,15 +66,26 @@ class ExpenseGroupController extends Controller
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $expenseGroup = ExpenseGroup::findOrFail($id);
+        $entryObject = ExpenseGroup::find($id);
+        if (!$entryObject) {
+            return response()->json([
+                'success' => false,
+                'data' => null,
+                'error' => "Entry with $id was not found in ".class_basename(get_class($this)).".",
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
             'group_key' => 'required|string|size:40|unique:expense_groups,group_key',
             'moneybox_id' => 'required|exists:money_boxes,id',
         ]);
-        $expenseGroup->update($validatedData);
-
-        return response()->json(['expenseGroup' => $expenseGroup], Response::HTTP_OK);
+        $entryObject->update($validatedData);
+        return response()->json([
+            'success' => true,
+            'data' => $entryObject,
+            'error' => null,
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -62,9 +93,20 @@ class ExpenseGroupController extends Controller
      */
     public function destroy($id): JsonResponse
     {
-        $expenseGroup = ExpenseGroup::findOrFail($id);
-        $expenseGroup->delete();
-
-        return response()->json(['expenseGroup' => $expenseGroup], Response::HTTP_OK);
+        $entryObject = ExpenseGroup::find($id);
+        if (!$entryObject) {
+            return response()->json([
+                'success' => false,
+                'data' => null,
+                'error' => "Entry with $id was not found in ".class_basename(get_class($this)).".",
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
+        $entryObject->delete();
+        return response()->json([
+            'success' => true,
+            'data' => $entryObject,
+            'error' => null,
+        ], Response::HTTP_OK);
     }
 }
