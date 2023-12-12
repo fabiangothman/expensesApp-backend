@@ -34,3 +34,10 @@ Route::get('/expense-group/{id}', [ExpenseGroupController::class, 'show']);
 Route::post('/expense-group', [ExpenseGroupController::class, 'store']);
 Route::put('/expense-group/{id}', [ExpenseGroupController::class, 'update']);
 Route::delete('/expense-group/{id}', [ExpenseGroupController::class, 'destroy']);
+
+// ExpenseGroupUser Routes
+Route::get('/expense-group-user', [ExpenseGroupController::class, 'index']);
+Route::get('/expense-group-user/{id}', [ExpenseGroupController::class, 'show']);
+Route::post('/expense-group-user', [ExpenseGroupController::class, 'store']);
+Route::put('/expense-group-user/{id}', [ExpenseGroupController::class, 'update']);
+Route::delete('/expense-group-user/{id}', [ExpenseGroupController::class, 'destroy']);
