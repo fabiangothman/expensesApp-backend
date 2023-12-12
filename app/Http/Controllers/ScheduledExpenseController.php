@@ -31,8 +31,9 @@ class ScheduledExpenseController extends Controller
             'frequency' => 'required|integer',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'expensegroup_id' => 'required|exists:expense_groups,id',
             'active' => 'required|boolean',
+            'expensegroup_id' => 'required|exists:expense_groups,id',
+            'expensecategory_id' => 'required|exists:expense_categories,id',
             'description' => 'nullable|string|max:255',
         ]);
         $scheduledExpense = ScheduledExpense::create($validatedData);
@@ -62,8 +63,9 @@ class ScheduledExpenseController extends Controller
             'frequency' => 'required|integer',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'expensegroup_id' => 'required|exists:expense_groups,id',
             'active' => 'required|boolean',
+            'expensegroup_id' => 'required|exists:expense_groups,id',
+            'expensecategory_id' => 'required|exists:expense_categories,id',
             'description' => 'nullable|string|max:255',
         ]);
         $scheduledExpense->update($validatedData);

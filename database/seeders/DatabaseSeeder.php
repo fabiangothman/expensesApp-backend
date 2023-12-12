@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\ExpenseGroup;
 use App\Models\ExpenseGroupUser;
+use App\Models\Transaction;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,9 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // MoneyBox::factory(1)->create();
-        // ExpenseGroup::factory(1)->create();
-
         // Creates first only some 'free' categories
         $parentCategories = ExpenseCategory::factory(5)->create();
         $childCategories = [];
@@ -42,8 +39,9 @@ class DatabaseSeeder extends Seeder
         // But also gets some users for the already created groups
         ExpenseGroupUser::factory(2)->withRandomExpenseGroup()->create();
 
-        //Now creates some dummy Expense entries
-        Expense::factory(30)->create();
+        //Now creates some dummy Transactions (it will create Expense or ScheduledExpense)
+        Transaction::factory(20)->withScheduledExpense()->create();
+        Transaction::factory(20)->withExpense()->create();
 
         //  User::factory(2)->create();
 

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('scheduledexpense_id')->nullable();
             $table->unsignedBigInteger('expense_id')->nullable();
             $table->boolean('canceled')->default(0);
+            $table->string('description')->nullable();
             $table->timestamps();
 
             $table->foreign('scheduledexpense_id')

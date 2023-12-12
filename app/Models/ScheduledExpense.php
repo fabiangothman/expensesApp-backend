@@ -17,8 +17,9 @@ class ScheduledExpense extends Model
         'frequency',
         'start_date',
         'end_date',
-        'expensegroup_id',
         'active',
+        'expensegroup_id',
+        'expensecategory_id',
         'description',
     ];
 
@@ -29,6 +30,15 @@ class ScheduledExpense extends Model
     public function expenseGroup()
     {
         return $this->belongsTo(ExpenseGroup::class, 'expensegroup_id');
+    }
+
+
+    /**
+     * scheduledExpense relationship to expenseCategory.
+     */
+    public function expenseCategory()
+    {
+        return $this->belongsTo(ExpenseCategory::class, 'expensecategory_id');
     }
 
     /**

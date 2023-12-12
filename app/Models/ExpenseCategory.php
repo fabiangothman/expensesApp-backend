@@ -48,4 +48,12 @@ class ExpenseCategory extends Model
     {
         return $this->hasMany(Expense::class, 'expensecategory_id');
     }
+    
+    /**
+     * expenseCategory relationship to all scheduledExpenses.
+     */
+    public function scheduledExpenses()
+    {
+        return $this->hasMany(ScheduledExpense::class, 'expensecategory_id');
+    }
 }

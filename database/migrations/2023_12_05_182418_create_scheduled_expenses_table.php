@@ -20,13 +20,17 @@ return new class extends Migration
             $table->integer('frequency');
             $table->timestamp('start_date')->default(now());
             $table->timestamp('end_date')->nullable()->default(null);
-            $table->unsignedBigInteger('expensegroup_id');
-            $table->string('description')->nullable();
             $table->boolean('active')->default(1);
+            $table->unsignedBigInteger('expensegroup_id');
+            $table->unsignedBigInteger('expensecategory_id');
+            $table->string('description')->nullable();
             $table->timestamps();
 
             $table->foreign('expensegroup_id')
                 ->references('id')->on('expense_groups')
+                ->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('expensecategory_id')
+                ->references('id')->on('expense_categories')
                 ->onUpdate('cascade')->onDelete('restrict');
         });
     }
