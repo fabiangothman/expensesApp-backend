@@ -20,8 +20,8 @@ class ExpenseCategoryFactory extends Factory
         return [
             'name' =>  $this->faker->unique()->word()." category",
             'expensegroup_id' => null,
-            'description' => fake()->sentence(),
             'parentcategory_id' => null,
+            'description' => fake()->sentence(),
         ];
     }
 }

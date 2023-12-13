@@ -25,15 +25,12 @@ class ScheduledExpenseController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
-            'transaction_type' => 'required|in:IN,OUT,NONE',
-            'value' => 'required|integer',
             'frequency_type' => 'required|in:DAILY,MONTHLY,YEARLY',
             'frequency' => 'required|integer',
             'start_date' => 'required|date',
-            'end_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'expense_id' => 'required|exists:expenses,id',
             'active' => 'required|boolean',
-            'expensegroup_id' => 'required|exists:expense_groups,id',
-            'expensecategory_id' => 'required|exists:expense_categories,id',
             'description' => 'nullable|string|max:255',
         ]);
         $scheduledExpense = ScheduledExpense::create($validatedData);
@@ -57,15 +54,12 @@ class ScheduledExpenseController extends Controller
         $scheduledExpense = ScheduledExpense::findOrFail($id);
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
-            'transaction_type' => 'required|in:IN,OUT,NONE',
-            'value' => 'required|integer',
             'frequency_type' => 'required|in:DAILY,MONTHLY,YEARLY',
             'frequency' => 'required|integer',
             'start_date' => 'required|date',
-            'end_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'expense_id' => 'required|exists:expenses,id',
             'active' => 'required|boolean',
-            'expensegroup_id' => 'required|exists:expense_groups,id',
-            'expensecategory_id' => 'required|exists:expense_categories,id',
             'description' => 'nullable|string|max:255',
         ]);
         $scheduledExpense->update($validatedData);

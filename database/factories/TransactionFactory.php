@@ -20,30 +20,8 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            'scheduledexpense_id' => null,
-            'expense_id' => Expense::factory(),
             'canceled' => false,
             'description' => $this->faker->sentence,
         ];
-    }
-
-    public function withScheduledExpense()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'scheduledexpense_id' => ScheduledExpense::factory(),
-                'expense_id' => null,
-            ];
-        });
-    }
-
-    public function withExpense()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'scheduledexpense_id' => null,
-                'expense_id' => Expense::factory(),
-            ];
-        });
     }
 }

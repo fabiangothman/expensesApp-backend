@@ -12,8 +12,8 @@ class ExpenseCategory extends Model
     protected $fillable = [
         'name',
         'expensegroup_id',
-        'description',
         'parentcategory_id',
+        'description',
     ];
 
 
@@ -34,9 +34,9 @@ class ExpenseCategory extends Model
     }
     
     /**
-     * expenseCategory relationship to all subCategories.
+     * expenseCategory relationship to all childCategories.
      */
-    public function subCategories()
+    public function childCategories()
     {
         return $this->hasMany(ExpenseCategory::class, 'parentcategory_id');
     }
@@ -47,13 +47,5 @@ class ExpenseCategory extends Model
     public function expenses()
     {
         return $this->hasMany(Expense::class, 'expensecategory_id');
-    }
-    
-    /**
-     * expenseCategory relationship to all scheduledExpenses.
-     */
-    public function scheduledExpenses()
-    {
-        return $this->hasMany(ScheduledExpense::class, 'expensecategory_id');
     }
 }

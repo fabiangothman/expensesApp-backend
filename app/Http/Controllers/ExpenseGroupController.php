@@ -31,6 +31,7 @@ class ExpenseGroupController extends Controller
             'name' => 'required|string|max:100',
             'group_key' => 'required|string|size:40|unique:expense_groups,group_key',
             'moneybox_id' => 'required|exists:money_boxes,id',
+            'description' => 'nullable|string|max:255',
         ]);
         $entryObject = ExpenseGroup::create($validatedData);
         return response()->json([
@@ -79,6 +80,7 @@ class ExpenseGroupController extends Controller
             'name' => 'required|string|max:100',
             'group_key' => 'required|string|size:40|unique:expense_groups,group_key',
             'moneybox_id' => 'required|exists:money_boxes,id',
+            'description' => 'nullable|string|max:255',
         ]);
         $entryObject->update($validatedData);
         return response()->json([

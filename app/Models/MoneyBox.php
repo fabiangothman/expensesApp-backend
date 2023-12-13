@@ -12,6 +12,7 @@ class MoneyBox extends Model
     protected $fillable = [
         'name',
         'currency_code',
+        'description',
     ];
     
     

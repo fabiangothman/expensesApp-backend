@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->unsignedBigInteger('expensegroup_id')->nullable()->default(null);
-            $table->string('description', 255)->nullable()->default(null);
             $table->unsignedBigInteger('parentcategory_id')->nullable()->default(null);
+            $table->string('description', 255)->nullable()->default(null);
             $table->timestamps();
 
             $table->foreign('expensegroup_id')

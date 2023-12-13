@@ -17,9 +17,10 @@ return new class extends Migration
             $table->timestamp('date');
             $table->enum('transaction_type', ['IN', 'OUT', 'NONE'])->default('NONE');
             $table->unsignedBigInteger('value');
+            $table->tinyInteger('processed')->default(false);
             $table->unsignedBigInteger('expensegroup_id');
             $table->unsignedBigInteger('expensecategory_id');
-            $table->string('description')->nullable()->default(null);
+            $table->string('description', 255)->nullable()->default(null);
             $table->timestamps();
 
             $table->foreign('expensegroup_id')

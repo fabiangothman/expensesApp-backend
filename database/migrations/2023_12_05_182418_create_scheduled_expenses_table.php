@@ -14,24 +14,18 @@ return new class extends Migration
         Schema::create('scheduled_expenses', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->enum('transaction_type', ['IN', 'OUT', 'NONE'])->default('NONE');
-            $table->unsignedBigInteger('value');
             $table->enum('frequency_type', ['DAILY', 'MONTHLY', 'YEARLY'])->default('MONTHLY');
-            $table->integer('frequency');
+            $table->integer('frequency')->default(1);
             $table->timestamp('start_date')->default(now());
             $table->timestamp('end_date')->nullable()->default(null);
-            $table->boolean('active')->default(1);
-            $table->unsignedBigInteger('expensegroup_id');
-            $table->unsignedBigInteger('expensecategory_id');
-            $table->string('description')->nullable();
+            $table->unsignedBigInteger('expense_id')->unsigned();
+            $table->boolean('active')->default(true);
+            $table->string('description', 255)->nullable()->default(null);
             $table->timestamps();
 
-            $table->foreign('expensegroup_id')
-                ->references('id')->on('expense_groups')
-                ->onUpdate('cascade')->onDelete('restrict');
-            $table->foreign('expensecategory_id')
-                ->references('id')->on('expense_categories')
-                ->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('expense_id')
+                ->references('id')->on('expenses')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

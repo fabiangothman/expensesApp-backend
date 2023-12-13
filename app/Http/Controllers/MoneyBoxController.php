@@ -30,6 +30,7 @@ class MoneyBoxController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'currency_code' => 'required|string|size:3',
+            'description' => 'nullable|string|max:255',
         ]);
         $entryObject = MoneyBox::create($validatedData);
         return response()->json([
@@ -77,6 +78,7 @@ class MoneyBoxController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'currency_code' => 'required|string|size:3',
+            'description' => 'nullable|string|max:255',
         ]);
         $entryObject->update($validatedData);
         return response()->json([

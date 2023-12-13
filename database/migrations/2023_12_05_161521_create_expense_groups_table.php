@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('group_key', 40)->unique();
             $table->unsignedBigInteger('moneybox_id');
+            $table->string('description', 255)->nullable()->default(null);
             $table->timestamps();
             
             $table->foreign('moneybox_id')

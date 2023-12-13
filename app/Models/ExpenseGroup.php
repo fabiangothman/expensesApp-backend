@@ -13,6 +13,7 @@ class ExpenseGroup extends Model
         'name',
         'group_key',
         'moneybox_id',
+        'description',
     ];
     protected $casts = [
         // 'group_key' => 'hashed',

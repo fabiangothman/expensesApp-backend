@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\ExpenseGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,21 +20,24 @@ class ScheduledExpenseFactory extends Factory
      */
     public function definition(): array
     {
-        $randomExpenseGroupId = ExpenseGroup::inRandomOrder()->first('id');
-        $randomExpenseCategoryId = ExpenseCategory::inRandomOrder()->first('id');
-
         return [
             'name' => "Scheduled expense ".$this->faker->word,
-            'transaction_type' => $this->faker->randomElement(['IN', 'OUT']),   // ['IN', 'OUT', 'NONE']
-            'value' => $this->faker->numberBetween(100, 10000),
             'frequency_type' => $this->faker->randomElement(['MONTHLY']),    // ['DAILY', 'MONTHLY', 'YEARLY']
             'frequency' => $this->faker->numberBetween(1, 30),
             'start_date' => $this->faker->dateTimeThisYear(),
             'end_date' => $this->faker->dateTimeBetween('now', '2 years'),
+            'expense_id' => Expense::factory(),
             'active' => true,
-            'expensegroup_id' => $randomExpenseGroupId,
-            'expensecategory_id' => $randomExpenseCategoryId,
             'description' => $this->faker->sentence,
         ];
+    }
+
+    public function withExistentExpenseGroupAndCategory()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'expense_id' => Expense::factory()->withExistentGroupAndCategory(),
+            ];
+        });
     }
 }

@@ -14,19 +14,11 @@ class Expense extends Model
         'date',
         'transaction_type',
         'value',
-        'expense_group_id',
-        'expense_group_category_id',
+        'processed',
+        'expensegroup_id',
+        'expensecategory_id',
         'description',
     ];
-
-
-    /**
-     * expense relationship to expenseGroup.
-     */
-    public function expenseGroup()
-    {
-        return $this->belongsTo(ExpenseGroup::class, 'expensegroup_id');
-    }
 
     /**
      * expense relationship to expenseCategory.
@@ -37,10 +29,26 @@ class Expense extends Model
     }
 
     /**
-     * expense relationship to all transactions.
+     * expense relationship to expenseGroup.
      */
-    public function transactions()
+    public function expenseGroup()
     {
-        return $this->hasMany(Transaction::class, 'expense_id');
+        return $this->belongsTo(ExpenseGroup::class, 'expensegroup_id');
+    }
+
+    /**
+     * expense relationship to transaction.
+     */
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class, 'expense_id');
+    }
+
+    /**
+     * expense relationship to scheduledExpense.
+     */
+    public function scheduledExpense()
+    {
+        return $this->hasOne(ScheduledExpense::class, 'expense_id');
     }
 }

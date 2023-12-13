@@ -18,9 +18,10 @@ class ExpenseGroupFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->word()."'s box",
+            'name' => fake()->word()."'s group",
             'group_key' => $this->faker->unique()->regexify('[A-Za-z0-9]{40}'),
             'moneybox_id' => MoneyBox::factory(),
+            'description' => fake()->sentence(),
         ];
     }
 }

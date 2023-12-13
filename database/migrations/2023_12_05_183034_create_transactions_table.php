@@ -13,20 +13,14 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('scheduledexpense_id')->nullable();
-            $table->unsignedBigInteger('expense_id')->nullable();
             $table->boolean('canceled')->default(0);
-            $table->string('description')->nullable();
+            $table->unsignedBigInteger('expense_id')->unsigned();
+            $table->string('description', 255)->nullable()->default(null);
             $table->timestamps();
 
-            $table->foreign('scheduledexpense_id')
-                ->references('id')->on('scheduled_expenses')
-                ->onUpdate('cascade')->onDelete('restrict');
             $table->foreign('expense_id')
                 ->references('id')->on('expenses')
-                ->onUpdate('cascade')->onDelete('restrict');
-            
-            // $table->check('((foreign_key1 IS NOT NULL AND foreign_key2 IS NULL) OR (foreign_key1 IS NULL AND foreign_key2 IS NOT NULL))');
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

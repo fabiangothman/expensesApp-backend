@@ -10,19 +10,10 @@ class Transaction extends Model
     use HasFactory;
     
     protected $fillable = [
-        'scheduled_expenses_id',
-        'expenses_id',
         'canceled',
+        'expense_id',
+        'description',
     ];
-
-
-    /**
-     * transaction relationship to scheduledExpense.
-     */
-    public function scheduledExpense()
-    {
-        return $this->belongsTo(ScheduledExpense::class, 'scheduledexpense_id');
-    }
 
     /**
      * transaction relationship to expense.

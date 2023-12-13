@@ -11,41 +11,21 @@ class ScheduledExpense extends Model
     
     protected $fillable = [
         'name',
-        'transaction_type',
-        'value',
         'frequency_type',
         'frequency',
         'start_date',
         'end_date',
+        'expense_id',
         'active',
-        'expensegroup_id',
-        'expensecategory_id',
         'description',
     ];
 
 
     /**
-     * scheduledExpense relationship to expenseGroup.
+     * scheduledExpense relationship to expense.
      */
-    public function expenseGroup()
+    public function expense()
     {
-        return $this->belongsTo(ExpenseGroup::class, 'expensegroup_id');
-    }
-
-
-    /**
-     * scheduledExpense relationship to expenseCategory.
-     */
-    public function expenseCategory()
-    {
-        return $this->belongsTo(ExpenseCategory::class, 'expensecategory_id');
-    }
-
-    /**
-     * scheduledExpense relationship to all transactions.
-     */
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class, 'scheduledexpense_id');
+        return $this->belongsTo(Expense::class, 'expense_id');
     }
 }

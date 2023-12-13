@@ -26,8 +26,8 @@ class ExpenseCategoryController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
             'expensegroup_id' => 'required|exists:expense_groups,id',
-            'description' => 'nullable|string|max:255',
             'parentcategory_id' => 'nullable|exists:expense_categories,id',
+            'description' => 'nullable|string|max:255',
         ]);
         $expenseCategory = ExpenseCategory::create($validatedData);
         return response()->json(['expenseCategory' => $expenseCategory], Response::HTTP_CREATED);
@@ -51,8 +51,8 @@ class ExpenseCategoryController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
             'expensegroup_id' => 'required|exists:expense_groups,id',
-            'description' => 'nullable|string|max:255',
             'parentcategory_id' => 'nullable|exists:expense_categories,id',
+            'description' => 'nullable|string|max:255',
         ]);
         $expenseCategory->update($validatedData);
 

@@ -24,10 +24,8 @@ class TransactionController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validatedData = $request->validate([
-            'scheduledexpense_id' => 'nullable|exists:scheduled_expenses,id',
-            'expense_id' => 'nullable|exists:expenses,id',
             'canceled' => 'required|boolean',
-            'expense_xor_scheduledexpense' => 'required_without_all:expense_id,scheduledexpense_id',
+            'description' => 'nullable|string|max:255',
         ]);
         $transaction = Transaction::create($validatedData);
         return response()->json(['transaction' => $transaction], Response::HTTP_CREATED);
@@ -49,10 +47,8 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::findOrFail($id);
         $validatedData = $request->validate([
-            'scheduledexpense_id' => 'nullable|exists:scheduled_expenses,id',
-            'expense_id' => 'nullable|exists:expenses,id',
             'canceled' => 'required|boolean',
-            'expense_xor_scheduledexpense' => 'required_without_all:expense_id,scheduledexpense_id',
+            'description' => 'nullable|string|max:255',
         ]);
         $transaction->update($validatedData);
 

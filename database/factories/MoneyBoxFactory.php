@@ -19,6 +19,7 @@ class MoneyBoxFactory extends Factory
         return [
             'name' => fake()->word()."'s box",
             'currency_code' => fake()->currencyCode(),
+            'description' => fake()->sentence(),
         ];
     }
 }
