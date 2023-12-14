@@ -25,6 +25,7 @@ class TransactionController extends Controller
     {
         $validatedData = $request->validate([
             'canceled' => 'required|boolean',
+            'expense_id' => 'required|exists:expenses,id',
             'description' => 'nullable|string|max:255',
         ]);
         $transaction = Transaction::create($validatedData);
@@ -48,6 +49,7 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         $validatedData = $request->validate([
             'canceled' => 'required|boolean',
+            'expense_id' => 'required|exists:expenses,id',
             'description' => 'nullable|string|max:255',
         ]);
         $transaction->update($validatedData);

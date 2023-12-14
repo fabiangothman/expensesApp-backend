@@ -25,7 +25,7 @@ class ExpenseCategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
-            'expensegroup_id' => 'required|exists:expense_groups,id',
+            'expensegroup_id' => 'nullable|exists:expense_groups,id',
             'parentcategory_id' => 'nullable|exists:expense_categories,id',
             'description' => 'nullable|string|max:255',
         ]);
@@ -50,7 +50,7 @@ class ExpenseCategoryController extends Controller
         $expenseCategory = ExpenseCategory::findOrFail($id);
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
-            'expensegroup_id' => 'required|exists:expense_groups,id',
+            'expensegroup_id' => 'nullable|exists:expense_groups,id',
             'parentcategory_id' => 'nullable|exists:expense_categories,id',
             'description' => 'nullable|string|max:255',
         ]);
