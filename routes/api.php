@@ -7,6 +7,7 @@ use App\Http\Controllers\ExpenseGroupUserController;
 use App\Http\Controllers\MoneyBoxController;
 use App\Http\Controllers\ScheduledExpenseController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// User Routes
+Route::post('/register', [UserController::class, 'register']);
 
 
 // MoneyBox Routes
