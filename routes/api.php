@@ -34,11 +34,13 @@ Route::get('/user', [UserController::class, 'index'])->middleware('auth:sanctum'
 
 
 // MoneyBox Routes
-Route::get('/money-boxes', [MoneyBoxController::class, 'index']);
-Route::get('/money-boxes/{id}', [MoneyBoxController::class, 'show']);
-Route::post('/money-boxes', [MoneyBoxController::class, 'store']);
-Route::put('/money-boxes/{id}', [MoneyBoxController::class, 'update']);
-Route::delete('/money-boxes/{id}', [MoneyBoxController::class, 'destroy']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/money-boxes', [MoneyBoxController::class, 'index']);
+    Route::get('/money-boxes/{id}', [MoneyBoxController::class, 'show']);
+    Route::post('/money-boxes', [MoneyBoxController::class, 'store']);
+    Route::put('/money-boxes/{id}', [MoneyBoxController::class, 'update']);
+    Route::delete('/money-boxes/{id}', [MoneyBoxController::class, 'destroy']);
+});
 
 // ExpenseGroup Routes
 Route::get('/expense-group', [ExpenseGroupController::class, 'index']);
