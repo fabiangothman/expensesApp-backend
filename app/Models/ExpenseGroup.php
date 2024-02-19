@@ -12,7 +12,7 @@ class ExpenseGroup extends Model
     protected $fillable = [
         'name',
         'group_key',
-        'moneybox_id',
+        'currency_id',
         'description',
     ];
     protected $casts = [
@@ -21,11 +21,11 @@ class ExpenseGroup extends Model
 
 
     /**
-     * expensegroup relationship to moneyBox.
+     * expensegroup relationship to currency.
      */
-    public function moneyBox()
+    public function currency()
     {
-        return $this->belongsTo(MoneyBox::class, 'moneybox_id');
+        return $this->belongsTo(Currency::class, 'currency_id');
     }
 
     /**

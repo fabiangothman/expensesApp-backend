@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('group_key', 40)->unique();
-            $table->unsignedBigInteger('moneybox_id');
+            $table->unsignedBigInteger('currency_id');
             $table->string('description', 255)->nullable()->default(null);
             $table->timestamps();
             
-            $table->foreign('moneybox_id')
-                ->references('id')->on('money_boxes')
+            $table->foreign('currency_id')
+                ->references('id')->on('currencies')
                 ->onUpdate('cascade')->onDelete('restrict');
         });
     }

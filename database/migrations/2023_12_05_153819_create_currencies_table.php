@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('money_boxes', function (Blueprint $table) {
+        Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('currency_code', 3)->default('USD');
+            $table->string('iso_code', 3)->default('USD');
             $table->string('description', 255)->nullable()->default(null);
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('money_boxes');
+        Schema::dropIfExists('currencies');
     }
 };

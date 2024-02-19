@@ -4,8 +4,6 @@ namespace Database\Factories;
 
 use App\Models\ExpenseCategory;
 use App\Models\ExpenseGroup;
-use App\Models\ScheduledExpense;
-use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

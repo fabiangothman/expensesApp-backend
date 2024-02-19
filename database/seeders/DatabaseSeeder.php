@@ -10,6 +10,7 @@ use App\Models\ExpenseGroup;
 use App\Models\ExpenseGroupUser;
 use App\Models\ScheduledExpense;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -36,7 +37,7 @@ class DatabaseSeeder extends Seeder
             'parentcategory_id' => $childCategories->random()->id,
         ]);
 
-        // Creates some ExpenseGroupUser samples (it will create ExpenseGroup, User and MoneyBox)
+        // Creates some ExpenseGroupUser samples (it will create ExpenseGroup, User and Currency)
         ExpenseGroupUser::factory(2)->create();
         // But also gets some users for the already created groups
         ExpenseGroupUser::factory(2)->withRandomExpenseGroup()->create();
@@ -57,11 +58,11 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        //  User::factory(2)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@email.com',
+            'password' => '123456',
+            'role' => 'user',
+        ]);
     }
 }

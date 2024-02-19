@@ -30,7 +30,7 @@ class ExpenseGroupController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
             'group_key' => 'required|string|size:40|unique:expense_groups,group_key',
-            'moneybox_id' => 'required|exists:money_boxes,id',
+            'currency_id' => 'required|exists:currencies,id',
             'description' => 'nullable|string|max:255',
         ]);
         $entryObject = ExpenseGroup::create($validatedData);
@@ -79,7 +79,7 @@ class ExpenseGroupController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
             'group_key' => 'required|string|size:40|unique:expense_groups,group_key',
-            'moneybox_id' => 'required|exists:money_boxes,id',
+            'currency_id' => 'required|exists:currencies,id',
             'description' => 'nullable|string|max:255',
         ]);
         $entryObject->update($validatedData);

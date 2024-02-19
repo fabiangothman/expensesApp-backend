@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MoneyBox extends Model
+class Currency extends Model
 {
     use HasFactory;
     
     protected $fillable = [
         'name',
-        'currency_code',
+        'iso_code',
         'description',
     ];
     
     
     /**
-     * moneyBox relationship to all expenseGroups.
+     * currency relationship to all expenseGroups.
      */
     public function expenseGroups()
     {
-        return $this->hasMany(ExpenseGroup::class, 'moneybox_id');
+        return $this->hasMany(ExpenseGroup::class, 'currency_id');
     }
 }

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MoneyBox;
+use App\Models\Currency;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class MoneyBoxController extends Controller
+class CurrencyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(): JsonResponse
     {
-        $entriesArray = MoneyBox::all();
+        $entriesArray = Currency::all();
         return response()->json([
             'success' => true,
             'data' => $entriesArray,
@@ -29,10 +29,10 @@ class MoneyBoxController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'currency_code' => 'required|string|size:3',
+            'iso_code' => 'required|string|size:3',
             'description' => 'nullable|string|max:255',
         ]);
-        $entryObject = MoneyBox::create($validatedData);
+        $entryObject = Currency::create($validatedData);
         return response()->json([
             'success' => true,
             'data' => $entryObject,
@@ -45,7 +45,7 @@ class MoneyBoxController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $entryObject = MoneyBox::find($id);
+        $entryObject = Currency::find($id);
         if (!$entryObject) {
             return response()->json([
                 'success' => false,
@@ -66,7 +66,7 @@ class MoneyBoxController extends Controller
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $entryObject = MoneyBox::find($id);
+        $entryObject = Currency::find($id);
         if (!$entryObject) {
             return response()->json([
                 'success' => false,
@@ -77,7 +77,7 @@ class MoneyBoxController extends Controller
         
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'currency_code' => 'required|string|size:3',
+            'iso_code' => 'required|string|size:3',
             'description' => 'nullable|string|max:255',
         ]);
         $entryObject->update($validatedData);
@@ -93,7 +93,7 @@ class MoneyBoxController extends Controller
      */
     public function destroy($id): JsonResponse
     {
-        $entryObject = MoneyBox::find($id);
+        $entryObject = Currency::find($id);
         if (!$entryObject) {
             return response()->json([
                 'success' => false,

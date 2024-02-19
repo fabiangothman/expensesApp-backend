@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\MoneyBox;
+use App\Models\Currency;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +20,7 @@ class ExpenseGroupFactory extends Factory
         return [
             'name' => fake()->word()."'s group",
             'group_key' => $this->faker->unique()->regexify('[A-Za-z0-9]{40}'),
-            'moneybox_id' => MoneyBox::factory(),
+            'currency_id' => Currency::factory(),
             'description' => fake()->sentence(),
         ];
     }
